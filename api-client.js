@@ -2,8 +2,6 @@ const baseURL = `https://wincacademydatabase.firebaseio.com/aron`;
 const jsonEnd = `.json`;
 const ul = document.querySelector("#to-do");
 
-// ul.contentWindow.location.reload(true);
-
 const getList = async () => {
   try {
     const apiAnswer = await fetch(`${baseURL}/tasks${jsonEnd}`, {
@@ -12,13 +10,11 @@ const getList = async () => {
 
     const result = await apiAnswer.json();
 
-    // console.log("Before (the raw result):", result);
     let tasks = Object.keys(result).map((key) => ({
       id: key,
       description: result[key].description,
       done: result[key].done,
     }));
-    // console.log("After the tasks array", tasks);
 
     return tasks;
   } catch (err) {
@@ -35,6 +31,7 @@ const postList = async (input) => {
     const result = await apiAnswer.json();
     console.log(`id for new list item: ${result}`);
     location.reload();
+    // ul.contentWindow.location.reload(true);
   } catch (err) {
     console.log(`this is how you ****ed up in POST: `, err);
   }
@@ -55,3 +52,25 @@ const deleteFromList = async (id) => {
     console.log(`this is how you ****ed up in DELETE: `, err);
   }
 };
+
+// const putList = async (listID, listDesc, listDone) => {
+//   try {
+//     let apiAnswer = null;
+//     if (listDone == true) {
+//       let apiAnswer = await fetch(`${baseURL}/tasks${listID}${jsonEnd}`, {
+//         method: "PUT",
+//         body: `{"description": "${listDesc}", "done": false}`,
+//       });
+//     } else {
+//       let apiAnswer = await fetch(`${baseURL}/tasks${listID}${jsonEnd}`, {
+//         method: "PUT",
+//         body: `{"description": "${listDesc}", "done": true}`,
+//       });
+//     }
+//     const result = await apiAnswer.json();
+//     console.log(`id for new list item: ${result}`);
+//     location.reload();
+//   } catch (err) {
+//     console.log(`this is how you ****ed up in POST: `, err);
+//   }
+// };
